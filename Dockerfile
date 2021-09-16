@@ -14,13 +14,14 @@ RUN apt-get update && apt-get -y upgrade \
         git \
         unzip \
         apache2 \
-        mysql-server \
+        mysql-client \
         php7.2 \
         libapache2-mod-php7.2 \
         php-xml \
         php7.2-imap \
         php7.2-mysql \
         php-mailparse \
+        supervisor \
         ca-certificates; \
     if ! command -v gpg; then \
 		apt-get install -y --no-install-recommends gnupg2 dirmngr; \
@@ -33,6 +34,7 @@ COPY ./.docker/config/apache2/httpd.conf /etc/apache2/apache2.conf
 COPY ./.docker/config/apache2/vhost.conf /etc/apache2/sites-available/000-default.conf
 COPY ./.docker/config/php/php.ini /etc/php/7.2/apache2/php.ini
 COPY ./.docker/bash/uvdesk-entrypoint.sh /usr/local/bin/
+COPY ./.docker/config/supervisor/supervisord.conf /etc/supervisord.conf
 COPY . /var/www/uvdesk/
 
 RUN \
@@ -83,5 +85,5 @@ RUN composer install && chown -R uvdesk:uvdesk /var/www;
 # Open Port 80
 EXPOSE 80
 
-ENTRYPOINT ["uvdesk-entrypoint.sh"]
-CMD ["/bin/bash"]
+#ENTRYPOINT ["uvdesk-entrypoint.sh"]
+CMD ["/bin/bash", "/uvdesk-entrypoint.sh"]
