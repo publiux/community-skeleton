@@ -86,4 +86,4 @@ RUN composer install && chown -R uvdesk:uvdesk /var/www;
 EXPOSE 80
 
 #ENTRYPOINT ["uvdesk-entrypoint.sh"]
-CMD ["/bin/bash", "/uvdesk-entrypoint.sh"]
+CMD ["/bin/bash", "/usr/local/bin/uvdesk-entrypoint.sh"]
